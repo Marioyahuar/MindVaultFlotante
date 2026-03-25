@@ -23,9 +23,18 @@ pub async fn intentar_claude(texto: &str) -> Result<(), String> {
         texto
     );
 
-    let mut child = tokio::process::Command::new("claude")
-        .arg("-p")
-        .arg(&prompt)
+    let mut cmd = tokio::process::Command::new("claude");
+    cmd.arg("-p").arg(&prompt);
+
+    // Evitar ventana de consola visible en Windows
+    #[cfg(target_os = "windows")]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
+        cmd.creation_flags(CREATE_NO_WINDOW);
+    }
+
+    let mut child = cmd
         .spawn()
         .map_err(|e| format!("Error al lanzar subprocess claude: {}", e))?;
 

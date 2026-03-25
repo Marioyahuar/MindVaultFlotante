@@ -11,14 +11,24 @@ pub struct EstadoSistema {
 
 /// Verifica si el binario `claude` está disponible en el PATH del sistema.
 /// Usa `where` en Windows y `which` en Unix/macOS.
+/// En Windows aplica CREATE_NO_WINDOW para evitar que aparezca una ventana de consola.
 pub fn verificar_claude() -> bool {
     #[cfg(target_os = "windows")]
-    let resultado = std::process::Command::new("where").arg("claude").output();
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
+        return match std::process::Command::new("where")
+            .arg("claude")
+            .creation_flags(CREATE_NO_WINDOW)
+            .output()
+        {
+            Ok(output) => output.status.success(),
+            Err(_) => false,
+        };
+    }
 
     #[cfg(not(target_os = "windows"))]
-    let resultado = std::process::Command::new("which").arg("claude").output();
-
-    match resultado {
+    match std::process::Command::new("which").arg("claude").output() {
         Ok(output) => output.status.success(),
         Err(_) => false,
     }
