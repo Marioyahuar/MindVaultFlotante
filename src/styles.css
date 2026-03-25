@@ -1,0 +1,144 @@
+/* Reset base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  padding: 12px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Indicadores de estado */
+.indicadores {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 11px;
+  color: #a0a0b0;
+}
+
+.indicador {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  cursor: default;
+}
+
+.punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #555;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+}
+
+.punto.activo {
+  background-color: #4caf50;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.5);
+}
+
+.punto.inactivo {
+  background-color: #f44336;
+  box-shadow: 0 0 4px rgba(244, 67, 54, 0.5);
+}
+
+/* Área de texto */
+textarea {
+  flex: 1;
+  resize: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #2e2e4e;
+  background-color: #12122a;
+  color: #e0e0e0;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+textarea:focus {
+  border-color: #5b5bf5;
+}
+
+textarea::placeholder {
+  color: #5a5a7a;
+}
+
+textarea.procesando {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Mensaje de estado */
+.mensaje-estado {
+  text-align: center;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  min-height: 22px;
+  transition: opacity 0.2s ease;
+}
+
+.mensaje-estado.oculto {
+  display: none;
+}
+
+.mensaje-estado.guardado {
+  color: #4caf50;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.mensaje-estado.pendiente {
+  color: #ff9800;
+  background-color: rgba(255, 152, 0, 0.1);
+}
+
+.mensaje-estado.error {
+  color: #f44336;
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+/* Botón de envío */
+#btn-enviar {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 13px;
+  background-color: #5b5bf5;
+  color: #ffffff;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+#btn-enviar:hover:not(:disabled) {
+  background-color: #4a4ae0;
+}
+
+#btn-enviar:active:not(:disabled) {
+  background-color: #3939cc;
+}
+
+#btn-enviar.deshabilitado,
+#btn-enviar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

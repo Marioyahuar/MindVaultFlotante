@@ -1,0 +1,14 @@
+project: MindVaultFlotante
+stack:
+  - tauri: "2.x"        # framework de escritorio (Rust + webview del sistema)
+  - rust: stable        # backend Tauri
+  - typescript: "^5.3"  # frontend webview
+test_framework: null
+persistence_mode: openspec
+rules:
+  - codigo_y_comentarios: español
+  - variables_y_funciones: inglés (convención estándar)
+  - commits: solo con confirmación explícita del usuario
+  - push: solo con confirmación explícita del usuario
+  - acciones_destructivas: preguntar siempre antes de ejecutar
+  - scope_ambiguo: preguntar antes de implementar
