@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use tauri::Emitter;
 
 /// Estado actual del sistema desde la perspectiva del usuario:
 /// si puede guardar memorias con IA (claude) y si el MCP está configurado.
@@ -65,22 +64,6 @@ pub fn verificar() -> EstadoSistema {
         claude_disponible: verificar_claude(),
         mcp_configurado: verificar_mcp_mindvault(),
     }
-}
-
-/// Inicia un loop en background que cada 30 segundos re-verifica el estado
-/// y emite el evento "estado-sistema" con el resultado actualizado.
-pub fn iniciar_loop_estado(app: tauri::AppHandle) {
-    tauri::async_runtime::spawn(async move {
-        loop {
-            tokio::time::sleep(tokio::time::Duration::from_secs(30)).await;
-
-            let estado = verificar();
-
-            if let Err(e) = app.emit("estado-sistema", &estado) {
-                eprintln!("Error al emitir evento estado-sistema: {}", e);
-            }
-        }
-    });
 }
 
 /// Comando Tauri: retorna el estado actual del sistema al frontend.

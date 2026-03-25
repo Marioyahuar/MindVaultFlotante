@@ -1,5 +1,4 @@
 import { invoke } from "@tauri-apps/api/core";
-import { listen } from "@tauri-apps/api/event";
 
 // Tipos
 type EstadoUI = "idle" | "procesando" | "guardado" | "pendiente" | "error";
@@ -106,10 +105,5 @@ async function inicializar(): Promise<void> {
     actualizarIndicadores({ claude_disponible: false, mcp_configurado: false });
   }
 }
-
-// Suscribirse al evento periódico de estado (cada 30s desde Rust)
-listen<EstadoSistema>("estado-sistema", (event) => {
-  actualizarIndicadores(event.payload);
-});
 
 inicializar();

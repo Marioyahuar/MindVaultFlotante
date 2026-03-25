@@ -21,9 +21,6 @@ fn main() {
             let config = config::Config::cargar(app.handle());
             app.manage(config.clone());
 
-            // Iniciar loop de verificación de estado en background
-            estado::iniciar_loop_estado(app.handle().clone());
-
             // Configurar menú del system tray.
             // Los IDs deben ser explícitos para que on_menu_event pueda matchear.
             let menu_mostrar =
